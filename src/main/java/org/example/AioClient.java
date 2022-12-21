@@ -30,12 +30,12 @@ public class AioClient {
 
         // 读取 Server 的数据
         ByteBuffer buffer = ByteBuffer.allocate(512);
-        Integer len = socketChannel.read(buffer).get();
-        if (len != -1) {
-            System.out.println("客户端收到消息：" + new String(buffer.array(), 0, len));
+        while (true) {
+            Integer len = socketChannel.read(buffer).get();
+            if (len != -1) {
+                System.out.println("客户端收到消息：" + new String(buffer.array(), 0, len));
+            }
         }
 
-        // 持续阻塞，看AIO能否同时处理多个连接
-        Thread.sleep(Integer.MAX_VALUE);
     }
 }
